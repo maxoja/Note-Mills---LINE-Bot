@@ -1,51 +1,48 @@
-from linebot import (
-    LineBotApi, WebhookHandler
-)
-from linebot.exceptions import (
-    InvalidSignatureError
-)
-from linebot.models import (
-    MessageEvent, TextMessage, TextSendMessage,
-)
+from linebot import LineBotApi, WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
-import hashlib
-import binascii
 import evernote.edam.userstore.constants as UserStoreConstants
 import evernote.edam.type.ttypes as Types
-import os
-import sys
 from evernote.api.client import EvernoteClient
-import argparse
+import hashlib, binascii
 
+import os, sys, argparse
 import configs
+
+line = None
+evernote = None
+def init_line_client():
+    global line
+    line = LineBotApi(configs.CHANNEL_ACCESS_TOKEN)
+    
+def init_evernote_client():
+    global evernote
+    evernote = EvernoteClient(token=configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, sandbox=True,china=False)
+    user_store = evernote.get_user_store()
+    version_ok = user_store.checkVersion(
+        "Python 3.x Application",
+        UserStoreConstants.EDAM_VERSION_MAJOR,
+        UserStoreConstants.EDAM_VERSION_MINOR
+    )
+    if not version_ok:
+        print('Incompatible protocol, terminate application')
+        exit(1)
 
 def test_line_api():
     print('== Begin testing LINE API')
-    line = LineBotApi(configs.CHANNEL_ACCESS_TOKEN)
+    init_line_client()
     line.push_message(to=configs.USER_ID, messages=TextSendMessage(text='Hello World!'))
     print('Push message to chat')
     print('== Finish testing LINE API')
 
 def test_evernote_api():
     print('== Begin testing Evernote API')
-    client = EvernoteClient(token=configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, sandbox=True,china=False)
-    user_store = client.get_user_store()
-    version_ok = user_store.checkVersion(
-        "Evernote EDAMTest (Python)",
-        UserStoreConstants.EDAM_VERSION_MAJOR,
-        UserStoreConstants.EDAM_VERSION_MINOR
-    )
-    
-    print("Is my Evernote API version up to date? ", str(version_ok),'\n')
-
-    note_store = client.get_note_store()
+    init_evernote_client()
+    note_store = evernote.get_note_store()
     notebooks = note_store.listNotebooks()
     print("Found ", len(notebooks), " notebooks:")
-    for notebook in notebooks:
-        print("  * ", notebook.name)
-    print('== Finish testing Evernote API')
 
-        
 def test():
     test_line_api()
     test_evernote_api()
@@ -59,3 +56,4 @@ if __name__ == "__main__":
         test()
         exit(0)
     
+
