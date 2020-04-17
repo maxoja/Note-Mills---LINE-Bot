@@ -47,11 +47,12 @@ def handle_message(event):
         reply_text = note_to_text(notes[0])
 
     send_message(line, reply_text)
-    
-if __name__ == "__main__":
-    tagged_notes = get_notes_by_tags(evernote, ['try'])
-    for note in tagged_notes:
-        text_in_note = note_to_text(note)
-        send_message(line, text_in_note)
 
-    app.run()
+if __name__ == "__main__":
+    # tagged_notes = get_notes_by_tags(evernote, ['try'])
+    # for note in tagged_notes:
+    #     text_in_note = note_to_text(note)
+    #     send_message(line, text_in_note)
+
+    # app.run()
+    app.run(host='0.0.0.0', port=5000)
