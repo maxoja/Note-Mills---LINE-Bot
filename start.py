@@ -47,6 +47,7 @@ def handle_message(event):
     print()
 
     tags = "".join((char if char.isalpha() else " ") for char in event.message.text).split()
+    tags = [ tag.lower() for tag in tags ]
     print('Extracted Note Tags:')
     print(tags)
     print()
