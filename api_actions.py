@@ -50,6 +50,9 @@ def get_notes_by_tags(client, tags=[]):
     search_filter.inactive = False
     search_filter.tagGuids = []
     [search_filter.tagGuids.append(tag.guid) for tag in tag_objs if tag.name in tags]
+
+    if len(search_filter.tagGuids) == 0:
+        return []
     
     result = note_store.findNotes(configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, search_filter, 0, VERY_LARGE_INT)
     notes = result.notes
