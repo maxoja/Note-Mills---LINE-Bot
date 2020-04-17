@@ -1,5 +1,5 @@
-how to set heroku env
-https://devcenter.heroku.com/articles/securekey
+how to set heroku env (either programmatically or by using dashboard)
+https://devcenter.heroku.com/articles/config-vars
 
 USER_ID = '<LINE dev console> / <your chhannel> / <basic settings>'
 CHANNEL_ACCESS_TOKEN = '<LINE dev console> / <your channel> / <messging API>'
