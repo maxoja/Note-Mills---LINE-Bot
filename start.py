@@ -62,16 +62,15 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    # print('handling event')
-    # print(event)
-    # print('message')
-    # print(event.message)
+    print('handling event')
+    print(event)
+    print('message')
+    print(event.message)
 
-    # reply_text = ''
-    # tags = event.message.text.replace(' ','').split(',')
-    # notes = get_notes_by_tags(evernote, tags)
-    # print('retrieved',len(notes),'notes')
-    # return 'OK'
+    reply_text = ''
+    tags = event.message.text.replace(' ','').split(',')
+    notes = get_notes_by_tags(evernote, tags)
+    print('retrieved',len(notes),'notes')
 
     # if len(notes) == 0:
     #     reply_text = 'There is no note with tag ' + str(tags)
@@ -86,7 +85,7 @@ def handle_message(event):
 
     # # send_message(line, reply_text)
 
-    # print('handler returning OK')
+    print('handler returning OK')
     return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
