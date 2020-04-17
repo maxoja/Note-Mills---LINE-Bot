@@ -55,4 +55,4 @@ if __name__ == "__main__":
     #     send_message(line, text_in_note)
 
     # app.run()
-    app.run(host='0.0.0.0', port=5000)
+    app.run()
