@@ -68,16 +68,10 @@ def handle_message(event):
     print(event)
     print('message')
     print(event.message)
-
-    print('suspect 1')
-    reply_text = ''
-    print('suspect 2')
+    reply_text = ' '
     tags = event.message.text.replace(' ','').split(',')
-    print('suspect 3')
     notes = get_notes_by_tags(evernote, tags)
-    print('suspect 4')
     print('retrieved',len(notes),'notes')
-    print('suspect 5')
 
     # if len(notes) == 0:
     #     reply_text = 'There is no note with tag ' + str(tags)
@@ -90,7 +84,7 @@ def handle_message(event):
     #     print('text in note')
     #     print(reply_text[:30])
 
-    # # send_message(line, reply_text)
+    send_message(line, reply_text)
 
     print('handler returning OK')
     return 'OK'
