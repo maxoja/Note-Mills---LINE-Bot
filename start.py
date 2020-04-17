@@ -41,7 +41,7 @@ def callback():
         if not isinstance(event.message, TextMessage):
             continue
 
-        handle webhook body
+        # handle webhook body
         try:
             handler.handle(body, signature)
         except InvalidSignatureError:
