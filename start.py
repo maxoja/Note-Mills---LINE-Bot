@@ -34,47 +34,28 @@ def callback():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    send_message(line, event.message.text)
+    print('=> handling event')
+    print(event)
+    print('message')
+    print(event.message)
 
-# @app.route("/callback", methods=['POST'])
-# def callback():
-#     # get X-Line-Signature header value
-#     signature = request.headers['X-Line-Signature']
+    tags = "".join((char if char.isalpha() else " ") for char in event.message.text).split()
+    print('extracted tags')
+    print(tags)
 
-#     # get request body as text
-#     body = request.get_data(as_text=True)
-#     app.logger.info("Request body: " + body)
+    notes = get_notes_by_tags(evernote, tags)
+    print('retrieved',len(notes),'notes')
 
-#     # parse webhook body
-#     try:
-#         events = parser.parse(body, signature)
-#     except InvalidSignatureError:
-#         abort(400)
-
-#     print(len(events), 'events detected')
-
-#     # if event is MessageEvent and message is TextMessage, then echo text
-#     for event in events:
-#         print('-'*10)
-#         print('is Message Event', isinstance(event, MessageEvent))
-#         print('has Text Message', isinstance(event.message, TextMessage))
-#         print('type:', type(event))
-#         print()
-#         if not isinstance(event, MessageEvent):
-#             continue
-#         if not isinstance(event.message, TextMessage):
-#             continue
-
-#         # handle webhook body
-#         try:
-#             handler.handle(body, signature)
-#         except InvalidSignatureError:
-#             print("Invalid signature. Please check your channel access token/channel secret.")
-#             abort(400)
-#         print('-'*10)
-
-#     print('returning OK')
-#     return 'OK'
+    if len(notes) == 0:
+        send_message(line, "Please select an existing tag")
+    else:
+        shuffle(notes)
+        print('picked note')
+        print(str(notes[0])[:30])
+        reply_text = note_to_text(notes[0])
+        print('text in note')
+        print(reply_text[:30])
+        send_message(line, reply_text)
 
 @app.route("/", methods=['GET'])
 def home():
