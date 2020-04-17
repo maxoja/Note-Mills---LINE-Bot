@@ -68,7 +68,7 @@ def handle_message(event):
     print(event)
     print('message')
     print(event.message)
-    reply_text = ' '
+    reply_text = 'Papuanewgini'
     tags = event.message.text.replace(' ','').split(',')
     notes = get_notes_by_tags(evernote, tags)
     print('retrieved',len(notes),'notes')
