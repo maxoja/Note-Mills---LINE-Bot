@@ -6,9 +6,13 @@ from random import shuffle
 line = init_line_client()
 handler = init_line_webhook()
 evernote = init_evernote_client()
+parser = init_line_parser()
 
 def note_to_text(note):
-    return htmlToText(note.content)
+    body_text = htmlToText(note.content).replace('\n\n\n','\n\n')
+    title_text = f'[ {note.title} ]'
+    result = title_text + '\n\n' + body_text
+    return result.strip()
 
 app = Flask(__name__)
 
@@ -30,28 +34,49 @@ def callback():
 
     return 'OK'
 
-@app.route("/", methods=['GET'])
-def home():
-    return 'Welcome Home'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    reply_text = ''
-    tags = event.message.text.replace(' ','').split(',')
+    print('========>')
+    print('Handling Event:')
+    print(event)
+    print()
+
+    print('Attached Message:')
+    print(event.message)
+    print()
+
+    tags = "".join((char if char.isalpha() else " ") for char in event.message.text).split()
+    tags = [ tag.lower() for tag in tags ]
+    print('Extracted Note Tags:')
+    print(tags)
+    print()
+
     notes = get_notes_by_tags(evernote, tags)
+    print('Retrieved',len(notes),' Notes')
+    print()
 
     if len(notes) == 0:
-        reply_text = 'There is no note with tag ' + str(tags)
+        send_message(line, "Please select an existing tag")
     else:
+        print('Shuffling retrieved notes ...')
         shuffle(notes)
-        reply_text = note_to_text(notes[0])
-
-    send_message(line, reply_text)
+        picked_note = notes[0]
+        reply_text = note_to_text(picked_note)
+        print('Picked note has content =',reply_text[:30],'...')
+        send_message(line, reply_text)
     
-if __name__ == "__main__":
-    tagged_notes = get_notes_by_tags(evernote, ['try'])
-    for note in tagged_notes:
-        text_in_note = note_to_text(note)
-        send_message(line, text_in_note)
+    print('<========')
 
+@app.route("/", methods=['GET'])
+def home():
+    return 'Welcome to the Home of Note Mills'
+
+@app.route("/webhook", methods=['GET', 'POST'])
+def webhook():
+    if request.method == 'POST':
+        return 'OK'
+
+if __name__ == "__main__":
+    send_message(line, "Bot server has started")
     app.run()

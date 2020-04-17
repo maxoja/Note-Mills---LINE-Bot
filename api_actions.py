@@ -1,4 +1,4 @@
-from linebot import LineBotApi, WebhookHandler
+from linebot import LineBotApi, WebhookHandler, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
@@ -19,6 +19,9 @@ def init_line_client():
 def init_line_webhook():
     return WebhookHandler(configs.CHANNEL_SECRET)
     
+def init_line_parser():
+    return WebhookParser(configs.CHANNEL_SECRET)
+
 def init_evernote_client():
     evernote = EvernoteClient(token=configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, sandbox=True,china=False)
     user_store = evernote.get_user_store()
@@ -35,6 +38,9 @@ def init_evernote_client():
 def send_message(client, text):
     client.push_message(to=configs.USER_ID, messages=TextSendMessage(text=text))
 
+def reply_message(client, token, text):
+    client.reply_message(token, TextSendMessage(text=text))
+
 def get_notes_by_tags(client, tags=[]):
     note_store = client.get_note_store()
 
@@ -44,6 +50,9 @@ def get_notes_by_tags(client, tags=[]):
     search_filter.inactive = False
     search_filter.tagGuids = []
     [search_filter.tagGuids.append(tag.guid) for tag in tag_objs if tag.name in tags]
+
+    if len(search_filter.tagGuids) == 0:
+        return []
     
     result = note_store.findNotes(configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, search_filter, 0, VERY_LARGE_INT)
     notes = result.notes
