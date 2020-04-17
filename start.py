@@ -62,32 +62,33 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print('handling event')
-    print(event)
-    print('message')
-    print(event.message)
+    pass
+    # print('handling event')
+    # print(event)
+    # print('message')
+    # print(event.message)
 
-    reply_text = ''
-    tags = event.message.text.replace(' ','').split(',')
-    notes = get_notes_by_tags(evernote, tags)
-    print('retrieved',len(notes),'notes')
-    return 'OK'
+    # reply_text = ''
+    # tags = event.message.text.replace(' ','').split(',')
+    # notes = get_notes_by_tags(evernote, tags)
+    # print('retrieved',len(notes),'notes')
+    # return 'OK'
 
-    if len(notes) == 0:
-        reply_text = 'There is no note with tag ' + str(tags)
-    else:
-        shuffle(notes)
-        print('after shuffle')
-        print('first note')
-        print(str(notes[0])[:30])
-        reply_text = note_to_text(notes[0])
-        print('text in note')
-        print(reply_text[:30])
+    # if len(notes) == 0:
+    #     reply_text = 'There is no note with tag ' + str(tags)
+    # else:
+    #     shuffle(notes)
+    #     print('after shuffle')
+    #     print('first note')
+    #     print(str(notes[0])[:30])
+    #     reply_text = note_to_text(notes[0])
+    #     print('text in note')
+    #     print(reply_text[:30])
 
-    # send_message(line, reply_text)
+    # # send_message(line, reply_text)
 
-    print('handler returning OK')
-    return 'OK'
+    # print('handler returning OK')
+    # return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
     app.run()
