@@ -29,6 +29,9 @@ def callback():
 
     return 'OK'
 
+@app.route("/", methods=['GET'])
+def home():
+    return 'Welcome Home'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
