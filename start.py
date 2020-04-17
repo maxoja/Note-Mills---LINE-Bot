@@ -36,12 +36,7 @@ def callback():
             continue
         if not isinstance(event.message, TextMessage):
             continue
-
-        line.reply_message(
-            event.reply_token,
-            TextSendMessage(text=event.message.text)
-        )
-
+        
         # handle webhook body
         try:
             handler.handle(body, signature)
