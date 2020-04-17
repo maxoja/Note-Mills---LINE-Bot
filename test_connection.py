@@ -6,6 +6,7 @@ def test_line_api():
     line = init_line_client()
     line.push_message(to=configs.USER_ID, messages=TextSendMessage(text='Hello World!'))
     print('Push message to chat')
+    handler = init_line_webhook()
     print('== Finish testing LINE API')
 
 def test_evernote_api():
@@ -14,6 +15,7 @@ def test_evernote_api():
     note_store = evernote.get_note_store()
     notebooks = note_store.listNotebooks()
     print("Found ", len(notebooks), " notebooks:")
+    print('== Finish testing Evernote API')
 
 def test_connection():
     test_line_api()
