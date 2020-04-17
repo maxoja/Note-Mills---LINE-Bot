@@ -6,6 +6,7 @@ from random import shuffle
 line = init_line_client()
 handler = init_line_webhook()
 evernote = init_evernote_client()
+parser = init_line_parser()
 
 def note_to_text(note):
     return htmlToText(note.content)
@@ -30,7 +31,7 @@ def callback():
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         print(event)
-        
+
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):

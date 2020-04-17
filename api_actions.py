@@ -1,4 +1,4 @@
-from linebot import LineBotApi, WebhookHandler
+from linebot import LineBotApi, WebhookHandler, WebhookParser
 from linebot.exceptions import InvalidSignatureError
 from linebot.models import MessageEvent, TextMessage, TextSendMessage
 
@@ -19,6 +19,9 @@ def init_line_client():
 def init_line_webhook():
     return WebhookHandler(configs.CHANNEL_SECRET)
     
+def init_line_parser():
+    return WebhookParser(configs.CHANNEL_SECRET)
+
 def init_evernote_client():
     evernote = EvernoteClient(token=configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, sandbox=True,china=False)
     user_store = evernote.get_user_store()
