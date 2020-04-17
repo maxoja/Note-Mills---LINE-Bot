@@ -71,6 +71,7 @@ def handle_message(event):
     tags = event.message.text.replace(' ','').split(',')
     notes = get_notes_by_tags(evernote, tags)
     print('retrieved',len(notes),'notes')
+    return 'OK'
 
     if len(notes) == 0:
         reply_text = 'There is no note with tag ' + str(tags)
