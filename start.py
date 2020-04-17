@@ -44,9 +44,10 @@ def handle_message(event):
         reply_text = 'There is no note with tag ' + str(tags)
     else:
         shuffle(notes)
-        note_text = note_to_text(notes[0])
-        line.reply_message(event.reply_token, TextSendMessage(text=note_text))
+        reply_text = note_to_text(notes[0])
 
+    send_message(line, reply_text)
+    
 if __name__ == "__main__":
     tagged_notes = get_notes_by_tags(evernote, ['try'])
     for note in tagged_notes:
