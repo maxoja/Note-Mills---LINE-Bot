@@ -3,10 +3,17 @@ To deploy to Heroku
 - login using the CLI
 
 create required files
-- runtime.txt specifying Python version
-- requirements.txt by running `pip freeze > requirements.txt`
+- `runtime.txt` specifying Python version
+- `requirements.txt` by running `pip freeze > requirements.txt`
+- `Procfile` specifying
 
 deploy
 - commit any changes of your repo to master (assuming master = deployment branch)
 -- `heroku create <app name of your choice>`
 -- `git push heroku master`
+-- or `git push heroku dev/main:master`
+
+util commands
+- `heroku ps` check running processes
+- `heroku open` open deployment URL
+- `heroku logs --tail` check server log feed

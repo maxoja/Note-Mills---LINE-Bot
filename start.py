@@ -1,6 +1,7 @@
 from flask import Flask, request, abort
 from api_actions import *
 from html2text import html2text as htmlToText
+from random import shuffle
 
 line = init_line_client()
 handler = init_line_webhook()
@@ -29,14 +30,24 @@ def callback():
 
     return 'OK'
 
+@app.route("/", methods=['GET'])
+def home():
+    return 'Welcome Home'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+    reply_text = ''
+    tags = event.message.text.replace(' ','').split(',')
+    notes = get_notes_by_tags(evernote, tags)
 
-if __name__ == "__main__":    
+    if len(notes) == 0:
+        reply_text = 'There is no note with tag ' + str(tags)
+    else:
+        shuffle(notes)
+        note_text = note_to_text(notes[0])
+        line.reply_message(event.reply_token, TextSendMessage(text=note_text))
+
+if __name__ == "__main__":
     tagged_notes = get_notes_by_tags(evernote, ['try'])
     for note in tagged_notes:
         text_in_note = note_to_text(note)
