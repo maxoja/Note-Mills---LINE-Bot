@@ -1,0 +1,7 @@
+import os
+
+env = os.environ
+
+USER_ID = env.get('USER_ID')
+CHANNEL_ACCESS_TOKEN = env.get('CHANNEL_ACCESS_TOKEN')
+EVERNOTE_SANDBOX_ACCESS_TOKEN = env.get('EVERNOTE_SANDBOX_ACCESS_TOKEN')
