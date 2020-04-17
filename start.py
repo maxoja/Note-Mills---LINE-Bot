@@ -12,7 +12,7 @@ def note_to_text(note):
     body_text = htmlToText(note.content).replace('\n\n\n','\n\n')
     title_text = f'[ {note.title} ]'
     result = title_text + '\n\n' + body_text
-    return result.trim()
+    return result.strip()
 
 app = Flask(__name__)
 
