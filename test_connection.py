@@ -1,4 +1,4 @@
-from actions import *
+from api_actions import *
 import configs
 
 def test_line_api():
