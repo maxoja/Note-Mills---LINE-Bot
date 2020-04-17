@@ -62,7 +62,6 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    pass
     # print('handling event')
     # print(event)
     # print('message')
@@ -88,7 +87,7 @@ def handle_message(event):
     # # send_message(line, reply_text)
 
     # print('handler returning OK')
-    # return 'OK'
+    return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
     app.run()
