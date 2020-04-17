@@ -40,12 +40,13 @@ def callback():
             continue
 
         # handle webhook body
-        try:
-            handler.handle(body, signature)
-        except InvalidSignatureError:
-            print("Invalid signature. Please check your channel access token/channel secret.")
-            abort(400)
+        # try:
+        #     handler.handle(body, signature)
+        # except InvalidSignatureError:
+        #     print("Invalid signature. Please check your channel access token/channel secret.")
+        #     abort(400)
 
+    print('returning OK')
     return 'OK'
 
 @app.route("/", methods=['GET'])
@@ -71,6 +72,7 @@ def handle_message(event):
 
     send_message(line, reply_text)
 
+    return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
     app.run()
