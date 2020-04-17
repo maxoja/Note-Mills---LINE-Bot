@@ -16,6 +16,9 @@ VERY_LARGE_INT = 999999999
 def init_line_client():
     return LineBotApi(configs.CHANNEL_ACCESS_TOKEN)
     
+def init_line_webhook():
+    return WebhookHandler(configs.CHANNEL_SECRET)
+    
 def init_evernote_client():
     evernote = EvernoteClient(token=configs.EVERNOTE_SANDBOX_ACCESS_TOKEN, sandbox=True,china=False)
     user_store = evernote.get_user_store()
