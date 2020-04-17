@@ -38,6 +38,9 @@ def init_evernote_client():
 def send_message(client, text):
     client.push_message(to=configs.USER_ID, messages=TextSendMessage(text=text))
 
+def reply_message(client, token, text):
+    client.reply_message(token, TextSendMessage(text=text))
+
 def get_notes_by_tags(client, tags=[]):
     note_store = client.get_note_store()
 
