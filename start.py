@@ -9,10 +9,10 @@ evernote = init_evernote_client()
 parser = init_line_parser()
 
 def note_to_text(note):
-    body_text = htmlToText(note.content).replace('\n\n','\n')
+    body_text = htmlToText(note.content).replace('\n\n\n','\n\n')
     title_text = f'[ {note.title} ]'
-    return title_text + '\n' + body_text
-    
+    result = title_text + '\n\n' + body_text
+    return result.trim()
 
 app = Flask(__name__)
 
