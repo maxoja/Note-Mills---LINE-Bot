@@ -70,12 +70,16 @@ def handle_message(event):
     reply_text = ''
     tags = event.message.text.replace(' ','').split(',')
     notes = get_notes_by_tags(evernote, tags)
+    print(notes)
 
-    # if len(notes) == 0:
-    #     reply_text = 'There is no note with tag ' + str(tags)
-    # else:
-    #     shuffle(notes)
-    #     reply_text = note_to_text(notes[0])
+    if len(notes) == 0:
+        reply_text = 'There is no note with tag ' + str(tags)
+    else:
+        shuffle(notes)
+        print('after shuffle')
+        print('first note')
+        print(notes[0])
+        reply_text = note_to_text(notes[0])
 
     # send_message(line, reply_text)
 
