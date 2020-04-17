@@ -30,13 +30,15 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
-        print(event)
-
+        print('is Message Event', isinstance(event, MessageEvent))
+        print('has Text Message', isinstance(event.message, TextMessage))
+        print('type:', type(event))
+        print()
         if not isinstance(event, MessageEvent):
             continue
         if not isinstance(event.message, TextMessage):
             continue
-        
+
         # handle webhook body
         try:
             handler.handle(body, signature)
