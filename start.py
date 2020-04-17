@@ -28,6 +28,8 @@ def callback():
     except InvalidSignatureError:
         abort(400)
 
+    print(len(events), 'events detected')
+
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
         print('is Message Event', isinstance(event, MessageEvent))
@@ -39,12 +41,12 @@ def callback():
         if not isinstance(event.message, TextMessage):
             continue
 
-        # handle webhook body
-        # try:
-        #     handler.handle(body, signature)
-        # except InvalidSignatureError:
-        #     print("Invalid signature. Please check your channel access token/channel secret.")
-        #     abort(400)
+        handle webhook body
+        try:
+            handler.handle(body, signature)
+        except InvalidSignatureError:
+            print("Invalid signature. Please check your channel access token/channel secret.")
+            abort(400)
 
     print('returning OK')
     return 'OK'
@@ -60,19 +62,20 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    reply_text = ''
-    tags = event.message.text.replace(' ','').split(',')
-    notes = get_notes_by_tags(evernote, tags)
+    pass
+    # reply_text = ''
+    # tags = event.message.text.replace(' ','').split(',')
+    # notes = get_notes_by_tags(evernote, tags)
 
-    if len(notes) == 0:
-        reply_text = 'There is no note with tag ' + str(tags)
-    else:
-        shuffle(notes)
-        reply_text = note_to_text(notes[0])
+    # if len(notes) == 0:
+    #     reply_text = 'There is no note with tag ' + str(tags)
+    # else:
+    #     shuffle(notes)
+    #     reply_text = note_to_text(notes[0])
 
-    send_message(line, reply_text)
+    # send_message(line, reply_text)
 
-    return 'OK'
+    # return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
     app.run()
