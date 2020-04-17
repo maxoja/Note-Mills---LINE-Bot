@@ -80,6 +80,8 @@ def handle_message(event):
         print('first note')
         print(str(notes[0])[:30])
         reply_text = note_to_text(notes[0])
+        print('text in note')
+        print(reply_text[:30])
 
     # send_message(line, reply_text)
 
