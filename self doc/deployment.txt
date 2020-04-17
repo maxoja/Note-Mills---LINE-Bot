@@ -10,3 +10,4 @@ deploy
 - commit any changes of your repo to master (assuming master = deployment branch)
 -- `heroku create <app name of your choice>`
 -- `git push heroku master`
+-- or `git push heroku dev/main:master`
