@@ -22,36 +22,59 @@ def callback():
     body = request.get_data(as_text=True)
     app.logger.info("Request body: " + body)
 
-    # parse webhook body
+    # handle webhook body
     try:
-        events = parser.parse(body, signature)
+        handler.handle(body, signature)
     except InvalidSignatureError:
+        print("Invalid signature. Please check your channel access token/channel secret.")
         abort(400)
 
-    print(len(events), 'events detected')
-
-    # if event is MessageEvent and message is TextMessage, then echo text
-    for event in events:
-        print('-'*10)
-        print('is Message Event', isinstance(event, MessageEvent))
-        print('has Text Message', isinstance(event.message, TextMessage))
-        print('type:', type(event))
-        print()
-        if not isinstance(event, MessageEvent):
-            continue
-        if not isinstance(event.message, TextMessage):
-            continue
-
-        # handle webhook body
-        try:
-            handler.handle(body, signature)
-        except InvalidSignatureError:
-            print("Invalid signature. Please check your channel access token/channel secret.")
-            abort(400)
-        print('-'*10)
-
-    print('returning OK')
     return 'OK'
+
+
+@handler.add(MessageEvent, message=TextMessage)
+def handle_message(event):
+    send_message(line, event.message.text)
+
+# @app.route("/callback", methods=['POST'])
+# def callback():
+#     # get X-Line-Signature header value
+#     signature = request.headers['X-Line-Signature']
+
+#     # get request body as text
+#     body = request.get_data(as_text=True)
+#     app.logger.info("Request body: " + body)
+
+#     # parse webhook body
+#     try:
+#         events = parser.parse(body, signature)
+#     except InvalidSignatureError:
+#         abort(400)
+
+#     print(len(events), 'events detected')
+
+#     # if event is MessageEvent and message is TextMessage, then echo text
+#     for event in events:
+#         print('-'*10)
+#         print('is Message Event', isinstance(event, MessageEvent))
+#         print('has Text Message', isinstance(event.message, TextMessage))
+#         print('type:', type(event))
+#         print()
+#         if not isinstance(event, MessageEvent):
+#             continue
+#         if not isinstance(event.message, TextMessage):
+#             continue
+
+#         # handle webhook body
+#         try:
+#             handler.handle(body, signature)
+#         except InvalidSignatureError:
+#             print("Invalid signature. Please check your channel access token/channel secret.")
+#             abort(400)
+#         print('-'*10)
+
+#     print('returning OK')
+#     return 'OK'
 
 @app.route("/", methods=['GET'])
 def home():
@@ -62,17 +85,17 @@ def webhook():
     if request.method == 'POST':
         return 'OK'
 
-@handler.add(MessageEvent, message=TextMessage)
-def handle_message(event):
-    print('=> handling event')
-    print(event)
-    print('message')
-    print(event.message)
-    reply_text = 'Papuanewgini'
-    tags = event.message.text.replace(' ','').split(',')
-    notes = get_notes_by_tags(evernote, tags)
-    print('retrieved',len(notes),'notes')
-
+# @handler.add(MessageEvent, message=TextMessage)
+# def handle_message(event):
+#     print('=> handling event')
+#     print(event)
+#     print('message')
+#     print(event.message)
+#     reply_text = 'Papuanewgini'
+#     tags = event.message.text.replace(' ','').split(',')
+#     notes = get_notes_by_tags(evernote, tags)
+#     print('retrieved',len(notes),'notes')
+# 
     # if len(notes) == 0:
     #     reply_text = 'There is no note with tag ' + str(tags)
     # else:
@@ -83,11 +106,11 @@ def handle_message(event):
     #     reply_text = note_to_text(notes[0])
     #     print('text in note')
     #     print(reply_text[:30])
-
-    send_message(line, reply_text)
-
-    print('handler returning OK')
-    return 'OK'
+# 
+    # send_message(line, reply_text)
+# 
+    # print('handler returning OK')
+    # return 'OK'
 if __name__ == "__main__":
-    send_message("Bot server has started")
+    send_message(line, "Bot server has started")
     app.run()
