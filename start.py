@@ -72,10 +72,5 @@ def handle_message(event):
     send_message(line, reply_text)
 
 if __name__ == "__main__":
-    # tagged_notes = get_notes_by_tags(evernote, ['try'])
-    # for note in tagged_notes:
-    #     text_in_note = note_to_text(note)
-    #     send_message(line, text_in_note)
-
-    # app.run()
+    send_message("Bot server has started")
     app.run()
