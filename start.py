@@ -32,6 +32,7 @@ def callback():
 
     # if event is MessageEvent and message is TextMessage, then echo text
     for event in events:
+        print('-'*10)
         print('is Message Event', isinstance(event, MessageEvent))
         print('has Text Message', isinstance(event.message, TextMessage))
         print('type:', type(event))
@@ -47,6 +48,7 @@ def callback():
         except InvalidSignatureError:
             print("Invalid signature. Please check your channel access token/channel secret.")
             abort(400)
+        print('-'*10)
 
     print('returning OK')
     return 'OK'
@@ -62,7 +64,7 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    print('handling event')
+    print('=> handling event')
     print(event)
     print('message')
     print(event.message)
