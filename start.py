@@ -62,15 +62,20 @@ def webhook():
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    print('handling event')
+    print(event)
+    print('message')
+    print(event.message)
+
     reply_text = ''
     tags = event.message.text.replace(' ','').split(',')
     notes = get_notes_by_tags(evernote, tags)
 
-    if len(notes) == 0:
-        reply_text = 'There is no note with tag ' + str(tags)
-    else:
-        shuffle(notes)
-        reply_text = note_to_text(notes[0])
+    # if len(notes) == 0:
+    #     reply_text = 'There is no note with tag ' + str(tags)
+    # else:
+    #     shuffle(notes)
+    #     reply_text = note_to_text(notes[0])
 
     # send_message(line, reply_text)
 
