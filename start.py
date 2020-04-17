@@ -74,6 +74,7 @@ def handle_message(event):
 
     # send_message(line, reply_text)
 
+    print('handler returning OK')
     return 'OK'
 if __name__ == "__main__":
     send_message("Bot server has started")
