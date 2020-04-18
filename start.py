@@ -9,7 +9,9 @@ evernote = init_evernote_client()
 parser = init_line_parser()
 
 def note_to_text(note):
-    body_text = htmlToText(note.content).replace('\n\n\n','\n\n')
+    body_text = htmlToText(note.content).strip()
+    body_text = body_text.replace('\n\n\n','\n')
+    body_text = body_text.replace('\n\n','\n')
     title_text = f'[ {note.title} ]'
     result = title_text + '\n\n' + body_text
     return result.strip()
@@ -34,7 +36,6 @@ def callback():
 
     return 'OK'
 
-
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     print('========>')
@@ -46,8 +47,8 @@ def handle_message(event):
     print(event.message)
     print()
 
-    tags = "".join((char if char.isalpha() else " ") for char in event.message.text).split()
-    tags = [ tag.lower() for tag in tags ]
+    tags =event.message.text.split(',')
+    tags = [ tag.strip() for tag in tags ]
     print('Extracted Note Tags:')
     print(tags)
     print()
@@ -57,13 +58,14 @@ def handle_message(event):
     print()
 
     if len(notes) == 0:
-        send_message(line, "Please select an existing tag")
+        send_message(line, "Please select an existing tag from the following")
+        send_message(line, str('\n'.join(get_all_tags(evernote))))
     else:
         print('Shuffling retrieved notes ...')
         shuffle(notes)
         picked_note = notes[0]
         reply_text = note_to_text(picked_note)
-        print('Picked note has content =',reply_text[:30],'...')
+        print('Picked note has content =',reply_text[:100],'...')
         send_message(line, reply_text)
     
     print('<========')
