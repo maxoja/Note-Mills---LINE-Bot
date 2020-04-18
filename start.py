@@ -64,7 +64,7 @@ def handle_message(event):
         shuffle(notes)
         picked_note = notes[0]
         reply_text = note_to_text(picked_note)
-        print('Picked note has content =',reply_text[:30],'...')
+        print('Picked note has content =',reply_text[:100],'...')
         send_message(line, reply_text)
     
     print('<========')
