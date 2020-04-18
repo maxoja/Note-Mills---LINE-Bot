@@ -19,7 +19,7 @@ It now only works on development environment. In other words, LINE's unpublished
 Please see `/self doc/deployment.txt`
 
 #### Reflection along the implementation
-- Heroku is simple and convenient to use but actually not a good fit for this project. The only way to expose your code for testing publicly with Heroku (as te 3rd party platform cant find webhook endpoint when I run it locally) is by pushing your source to Heroku's repository. This takes at least a minute each time. Once I found a bug I didn't yet understand which needed a number of experimental trials, it suddenly became a vital bottle neck extending development time from an hour to several (thinking about a guitar with 1 second auditory delay when you strum, how long it would take to learn a song).
+- Heroku is simple and convenient to use but actually not a good fit for this project. The only way to expose your code for testing on remote machine with Heroku (as te 3rd party platform cant find webhook endpoint when I run it locally) is by pushing your source to Heroku's repository. This takes at least a minute each time. Once I found a bug I didn't yet understand which needed a number of experimental trials, it suddenly became a vital bottle neck extending development time from an hour to several (thinking about a guitar with 1 second auditory delay when you strum, how long it would take to learn a song).
 
 #### Some of the knowledge I harnessed along the way
 - [Best Practices for Python Virtual Environment and Git Repos](https://libzx.so/main/learning/2016/03/13/best-practice-for-virtualenv-and-git-repos.html)
