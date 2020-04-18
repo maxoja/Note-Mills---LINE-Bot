@@ -57,7 +57,8 @@ def handle_message(event):
     print()
 
     if len(notes) == 0:
-        send_message(line, "Please select an existing tag")
+        send_message(line, "Please select an existing tag from the following")
+        send_message(line, str('\n'.join(get_all_tags(evernote))))
     else:
         print('Shuffling retrieved notes ...')
         shuffle(notes)
