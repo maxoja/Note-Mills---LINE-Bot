@@ -13,7 +13,7 @@ It now only works on development environment. In other words, LINE's unpublished
 - Obtain your Evernote's `sandbox access token`
 - Obtain your LINE's `user id`, `channel access token`, and `channel secret`
 - Set them as environment variable as described in `/self doc/configs_guide.md`
-- You should be able to start the server by executing `python start.py` but with my knowledge, I am not sure how to let LINE platform access the webhook endpoint without deployment. So this will just make sure that it is runnable and it won't be functional.
+- You should be able to start the server by executing `python start.py` but with my knowledge, I am not sure how to let LINE platform access the webhook endpoint without deployment. So this will just make sure that it is runnable but it won't be functional.
 
 #### Deploy to Heroku
 Please see `/self doc/deployment.txt`
