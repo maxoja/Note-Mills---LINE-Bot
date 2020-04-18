@@ -4,7 +4,7 @@ Note Mills propose a `LINE` chat bot that picks a random note you had written on
 Simply sending a note tag name to the bot will make it do its job. A random note with the specified tag will be delivered.
 You can adapt it to your personal needs by categorise your notes using tags.
 
-There's still a number of limitations due to large amount of extra work required by Evernote and LINE platforms to be done to put it out of development mode.
+There's still a number of limitations due to large amount of extra work required by Evernote and LINE platforms to put it out of development mode.
 The code is enough for anyone with moderate software development knowledge to make it run for your personal use, but it's still far from a product for general users.
 It now only works on development environment. In other words, LINE's unpublished bot and Evernote's sandbox.
 
