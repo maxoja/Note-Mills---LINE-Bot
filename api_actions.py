@@ -41,11 +41,17 @@ def send_message(client, text):
 def reply_message(client, token, text):
     client.reply_message(token, TextSendMessage(text=text))
 
-def get_notes_by_tags(client, tags=[]):
+def get_notes_by_tags(client, tags=[], case_sensitive=False):
     note_store = client.get_note_store()
 
     tag_objs = note_store.listTags(configs.EVERNOTE_SANDBOX_ACCESS_TOKEN)
-
+    
+    if not case_sensitive:
+        for tag in tag_objs:
+            tag.name = tag.name.lower()
+        for i in range(len(tags)):
+            tags[i] = tags[i].lower()
+    
     search_filter = NoteStore.NoteFilter()
     search_filter.inactive = False
     search_filter.tagGuids = []
