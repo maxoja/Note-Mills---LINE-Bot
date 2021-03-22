@@ -1,4 +1,4 @@
-Be noted - This was created as a toy project and hasn't been maintained and is unlikely to be functional with current version of Evernote. Also there're some dependencies with security flaws.
+**Be noted - This was created as a toy project and hasn't been maintained and is unlikely to be functional with current version of Evernote. Also there're some dependencies with security flaws.**
   
 The name `Note Mills` is a scrambled version of the phrase "notes of motivationsl pills". To remind oneself about what drive the person to do something rewarding in the first place is the purpose of Note Mills. Mainly, I did this for personal use but should it seems valuable and worth exploring for others, I described below more details for the case of exploiting this repository.
 
